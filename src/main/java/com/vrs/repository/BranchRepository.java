@@ -18,8 +18,7 @@ public class BranchRepository {
         branchMapByName.put(branch.getName(), branch);
     }
 
-    public void modifyBranchCost(String name, CarType carType, int cost){
-        Branch branch = (Branch) branchMapByName.get(name);
+    public void modifyBranchCost(Branch branch, CarType carType, int cost){
         branch.setCostByType(carType, cost);
     }
 

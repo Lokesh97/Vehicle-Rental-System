@@ -5,6 +5,8 @@ import main.java.com.vrs.entity.Car;
 import main.java.com.vrs.entity.CarType;
 import main.java.com.vrs.repository.BranchRepository;
 import main.java.com.vrs.repository.CarRepository;
+import main.java.com.vrs.vehicleSelectionStrategy.CarSelectionStrategy;
+import main.java.com.vrs.vehicleSelectionStrategy.MinCostCarSelectionStrategy;
 
 import java.util.Date;
 import java.util.List;
@@ -38,7 +40,7 @@ public class RentalServiceImpl implements RentalServices{
             return "Branch Not Present";
         }
 
-        branchRepository.modifyBranchCost(branchName, CarType.valueOf(vehicleType.toUpperCase()), price);
+        branchRepository.modifyBranchCost(branch, CarType.valueOf(vehicleType.toUpperCase()), price);
         return "Success";
     }
 
@@ -56,7 +58,16 @@ public class RentalServiceImpl implements RentalServices{
 
     @Override
     public String bookVehicle(String vehicleType, Date startTime, Date endTime) {
-        return null;
+        CarSelectionStrategy carSelectionStrategy = new MinCostCarSelectionStrategy();
+
+        List cars = carRepository.getCarsByType(CarType.valueOf(vehicleType.toUpperCase()));
+
+        Car car = carSelectionStrategy.selectCar(cars, CarType.valueOf(vehicleType.toUpperCase()), startTime, endTime);
+
+        if(car == null){
+            return "NO " + vehicleType + " AVAILABLE";
+        }
+        return car.getId() + " from " + car.getBranch().getName() + " booked.";
     }
 
     @Override

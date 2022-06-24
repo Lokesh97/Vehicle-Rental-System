@@ -54,11 +54,27 @@ public class Main {
                     System.out.println(rentalService.addVehicle(id, type, name));
                     break;
                 case 4:
-                    break;
-                case 5:
+                    System.out.println("type");
+                    sc = new Scanner(System.in);
+                    type = sc.nextLine();
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
                     Date start = null, end = null;
                     String date1, date2;
+                    sc = new Scanner(System.in);
+                    date1 = sc.next();
+                    date2 = sc.next();
+                    try {
+                        //Parsing the String
+                        start = sdf.parse(date1);
+                        end = sdf.parse(date2);
+                        System.out.println(rentalService.bookVehicle(type, start, end));
+                    } catch (ParseException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    break;
+                case 5:
+                    sdf = new SimpleDateFormat("dd-mm-yyyy");
                     sc = new Scanner(System.in);
                     date1 = sc.next();
                     date2 = sc.next();

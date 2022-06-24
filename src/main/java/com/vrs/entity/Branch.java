@@ -20,6 +20,10 @@ public class Branch {
         this.cost = new HashMap();
     }
 
+    public int getCostByType(CarType carType) {
+        return (int) this.cost.get(carType);
+    }
+
     public void setCostByType(CarType carType,int cost) {
         this.cost.put(carType, cost);
     }
